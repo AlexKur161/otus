@@ -11,11 +11,13 @@
 <script setup>
   import Loading from 'vue-loading-overlay';
   import Card from './Card.vue'
+  import { useSearch } from '../nameSearch.js'
   import { onMounted, reactive, ref } from 'vue'
 
+  const { search } = useSearch();
   let productList = reactive([])
-  let isLoading = ref(false)
-  let fullPage = ref(true)
+  const isLoading = ref(false)
+  const fullPage = ref(true)
 
   onMounted(() => {
     isLoading.value = true;
