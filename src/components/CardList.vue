@@ -10,26 +10,23 @@
 <script></script>
 <script setup>
   import Loading from 'vue-loading-overlay';
+  import { useStore } from 'vuex'
   import Card from './Card.vue'
   import { useSearch } from '../nameSearch.js'
-  import { onMounted, reactive, ref } from 'vue'
+  import { onMounted, reactive, ref, computed } from 'vue'
 
   const { search } = useSearch();
   let productList = reactive([])
   const isLoading = ref(false)
   const fullPage = ref(true)
+  const store = useStore()
 
-  onMounted(() => {
+  productList = computed(() => store.getters.getProductList)
+
+  onMounted(async() => {
     isLoading.value = true;
-    fetch('https://fakestoreapi.com/products')
-  .then((response) => {
-    return response.json();
-  })
-  .then((data) => {
-    console.log(data);
-    productList = data
+    await store.dispatch('setProductListAction')
     isLoading.value = false;
-  });
   })
 </script>
 <style>
