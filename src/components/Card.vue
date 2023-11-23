@@ -1,21 +1,21 @@
 <template>
     <div class="card">
         <div class="img-wrap">
-            <img class="img-card" :src="productCard.image" alt="">
+            <img class="img-card" :src="productCard?.image" alt="">
         </div>
         <div class="description-wrap">
           <div>
-            <p class="price-card">{{ productCard.price }} $</p>
-            <p class="name-product">{{ productCard.title }}</p>
-            <p class="description-product">{{ productCard.description }}</p>
+            <p class="price-card">{{ productCard?.price }} $</p>
+            <p class="name-product">{{ productCard?.title }}</p>
+            <p class="description-product">{{ productCard?.description }}</p>
           </div>
             <div class="category-rating">
               <div class="rating-wrap">
                 <img class="icon-star" src="/star.svg" alt="rating">
-                <p class="rating_number">{{productCard.rating.rate}}</p>
+                <p class="rating_number">{{productCard?.rating?.rate}}</p>
               </div>
               <div class="category-wrap">
-                <p class="category-title">{{productCard.category}}</p>
+                <p class="category-title">{{productCard?.category}}</p>
               </div>
             </div>
         </div>

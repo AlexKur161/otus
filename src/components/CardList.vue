@@ -1,6 +1,6 @@
 <template>
   <div class="card-wrap">
-    <Card v-for="product in productList" :product-card="product" :key="product.id"/>
+    <Card v-for="product in fetchProducts" :product-card="product" :key="product.id"/>
     <loading
       v-model:active="isLoading"
       :can-cancel="true"
@@ -11,23 +11,17 @@
 <script setup>
   import Loading from 'vue-loading-overlay';
   import Card from './Card.vue'
+  import { useListProducts } from '../composable/services.js'
   import { onMounted, reactive, ref } from 'vue'
 
-  let productList = reactive([])
   let isLoading = ref(false)
   let fullPage = ref(true)
+  const { fetchProducts } = useListProducts()
 
-  onMounted(() => {
+  onMounted(async() => {
     isLoading.value = true;
-    fetch('https://fakestoreapi.com/products')
-  .then((response) => {
-    return response.json();
-  })
-  .then((data) => {
-    console.log(data);
-    productList = data
+    await useListProducts();
     isLoading.value = false;
-  });
   })
 </script>
 <style>
