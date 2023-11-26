@@ -7,6 +7,6 @@
 <style scoped>
 .footer {
     height: 80px;
-    background: grey;
+    background:  #8000FF;
 }
 </style>

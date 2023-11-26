@@ -1,23 +1,26 @@
 <template>
     <div class="card">
         <div class="img-wrap">
-            <img class="img-card" :src="productCard.image" alt="">
+            <img class="img-card" :src="productCard?.image" alt="">
         </div>
         <div class="description-wrap">
           <div>
-            <p class="price-card">{{ productCard.price }} $</p>
-            <p class="name-product">{{ productCard.title }}</p>
-            <p class="description-product">{{ productCard.description }}</p>
+            <p class="price-card">{{ productCard?.price }} $</p>
+            <p class="name-product">{{ productCard?.title }}</p>
+            <p class="description-product">{{ productCard?.description }}</p>
           </div>
-            <div class="category-rating">
+          <div class="add_basket_wrap">
+            <button class="btn_basket_wrap">Добавить в корзину</button>
+          </div>
+          <div class="category-rating">
               <div class="rating-wrap">
                 <img class="icon-star" src="/star.svg" alt="rating">
-                <p class="rating_number">{{productCard.rating.rate}}</p>
+                <p class="rating_number">{{productCard?.rating.rate}}</p>
               </div>
               <div class="category-wrap">
-                <p class="category-title">{{productCard.category}}</p>
+                <p class="category-title">{{productCard?.category}}</p>
               </div>
-            </div>
+          </div>
         </div>
     </div>
 </template>
@@ -43,7 +46,7 @@ defineProps({
 .card {
   padding: 20px;
   width: 300px;
-  height: 400px;
+  height: 450px;
   background-color: #fff;
   box-shadow: 0 0 20px rgba(36,36,36,.1);
   border-radius: 16px;
@@ -51,12 +54,40 @@ defineProps({
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
-  transition: 1.1s;
+  transition: 0.9s;
   scale: 1;
 }
 .card:hover{
-  transition: 1.1s;
+  transition: 0.9s;
+  z-index: 999;
   scale: 1.1;
+}
+.add_basket_wrap {
+  display: flex;
+  scale: 0;
+  justify-content: center;
+  padding: 10px 0;
+}
+.card:hover .add_basket_wrap{
+  scale: 1;
+}
+.btn_basket_wrap{
+  background: #fff;
+  color: #8000FF;
+  border: 1px solid #8000FF;
+  border-radius: 24px;
+  padding: 10px 20px;
+  opacity: 0;
+}
+.btn_basket_wrap:hover{
+  background: #8000FF;
+  color: #fff;
+}
+.card:hover .btn_basket_wrap{
+  transition: 0.9s;
+  z-index: 999;
+  scale: 1.1;
+  opacity: 1;
 }
 .img-wrap{
   width: 100%;

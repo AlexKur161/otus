@@ -10,15 +10,12 @@
 </template>
 
 <script setup>
-import { ref, watch} from 'vue'
+import { ref, computed} from 'vue'
 import { useSearch } from '../nameSearch.js'
 
-const { search } = useSearch();
 
-//  const test = watch(search, (newValue) => {
-//     console.log('chf,jnfl')
-//     changeSearch(newValue);
-//  })
+const search = ref('');
+const searchName = computed(() => useSearch(search))
 </script>
 
 <style scoped>
@@ -30,7 +27,7 @@ const { search } = useSearch();
 }
 .inp_search{
     display: block;
-    border-radius: 15px;
+    border-radius: 24px;
     outline: none;
     border: none;
     height: 40px;
@@ -42,14 +39,18 @@ const { search } = useSearch();
 }
 .btn_search{
     position: absolute;
-    right: 0;
+    right: 3px;
     top: 0;
-    height: 40px;
-    width: 40px;
-    border-radius: 0 15px 15px 0;
+    top: 50%;
+    transform: translate( 0, -50%);
+    height: 34px;
+    width: 34px;
     border: none;
+    border-radius: 90px;
+    background:  #8000FF;
 }
 .btn_img {
-    height: 25px;
+    height: 20px;
+    fill: white;
 }
 </style>

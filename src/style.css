@@ -7,6 +7,11 @@
 html, body {
   height: 100%;
 }
+.container{
+  max-width: 1320px;
+  margin: auto;
+  padding: 0 20px;
+}
 button {
   cursor: pointer;
 }

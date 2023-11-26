@@ -15,7 +15,7 @@
   import { useSearch } from '../nameSearch.js'
   import { onMounted, reactive, ref, computed } from 'vue'
 
-  const { search } = useSearch();
+  const search = useSearch();
   let productList = reactive([])
   const isLoading = ref(false)
   const fullPage = ref(true)
