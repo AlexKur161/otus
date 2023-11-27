@@ -45,7 +45,7 @@ defineProps({
 <style>
 .card {
   padding: 20px;
-  width: 300px;
+  width: calc(1214px / 4);
   height: 450px;
   background-color: #fff;
   box-shadow: 0 0 20px rgba(36,36,36,.1);

@@ -3,12 +3,23 @@ import axios from 'axios'
 export const store = createStore({
     state () {
       return {
-        ProductList: []
+        ProductList: [],
+        filterList: []
       }
     },
     mutations: {
       setProductList (state, data) {
         state.ProductList = data;
+        state.filterList = data;
+      },
+      searchHeader (state, data) {
+        console.log(data)
+        state.filterList = state.ProductList
+        .filter(item => item.title.toLowerCase().includes(data.name.toLowerCase()));
+        if((data.minPrice !== undefined) && (data.maxPrice !== undefined)) {
+          state.filterList = state.filterList.filter
+          (item => (item.price > data.minPrice) && (item.price < data.minPrice) )
+        }
       }
     },
     actions: {
@@ -24,7 +35,10 @@ export const store = createStore({
       },
     getters: {
       getProductList(state) {
-        return state.ProductList
+        return state.ProductList;
+      },
+      getFilterList(state) {
+        return state.filterList;
       }
     }
 })

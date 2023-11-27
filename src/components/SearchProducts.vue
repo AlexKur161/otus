@@ -1,8 +1,8 @@
 <template>
   <div class="search_wrap">
     <div class="wraper_inp">
-        <input placeholder="Поиск товара" class="inp_search" v-model="search" type="text">
-        <button class="btn_search">
+        <input placeholder="Поиск товара" class="inp_search" @input="searchName" v-model="search" type="text">
+        <button @click="searchName" class="btn_search">
             <img class="btn_img" src="/search.svg" alt="search">
         </button>
     </div>
@@ -11,11 +11,15 @@
 
 <script setup>
 import { ref, computed} from 'vue'
-import { useSearch } from '../nameSearch.js'
+import { useStore } from 'vuex';
 
 
 const search = ref('');
-const searchName = computed(() => useSearch(search))
+const store = useStore()
+
+function searchName() {
+    store.commit('searchHeader', search.value);
+}
 </script>
 
 <style scoped>
