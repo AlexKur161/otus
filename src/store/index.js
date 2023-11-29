@@ -4,7 +4,8 @@ export const store = createStore({
     state () {
       return {
         ProductList: [],
-        filterList: []
+        filterList: [],
+        nameFilter: ''
       }
     },
     mutations: {
@@ -12,13 +13,18 @@ export const store = createStore({
         state.ProductList = data;
         state.filterList = data;
       },
+      setnameFilter(state, data) {
+        state.nameFilter = data;
+      },
       searchHeader (state, data) {
         console.log(data)
         state.filterList = state.ProductList
-        .filter(item => item.title.toLowerCase().includes(data.name.toLowerCase()));
-        if((data.minPrice !== undefined) && (data.maxPrice !== undefined)) {
+        .filter(item => item.title.toLowerCase().includes(state.nameFilter.toLowerCase()));
+        console.log(state.filterList.filter
+          (item => item.price > 0 ))
+        if (data.maxPrice !== 0) {
           state.filterList = state.filterList.filter
-          (item => (item.price > data.minPrice) && (item.price < data.minPrice) )
+          (item => (item.price > data.minPrice) && (item.price < data.maxPrice) )
         }
       }
     },
@@ -39,6 +45,9 @@ export const store = createStore({
       },
       getFilterList(state) {
         return state.filterList;
+      },
+      getNameFilter(state) {
+        return state.nameFilter;
       }
     }
 })

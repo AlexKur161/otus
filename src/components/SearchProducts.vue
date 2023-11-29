@@ -10,14 +10,22 @@
 </template>
 
 <script setup>
-import { ref, computed} from 'vue'
+import { ref, computed, watch} from 'vue'
 import { useStore } from 'vuex';
 
 
 const search = ref('');
 const store = useStore()
 
+const nameFilter = computed(() => store.getters.getNameFilter)
+
+watch(nameFilter, () => {
+console.log('onUpdate сработал');
+search.value = nameFilter.value;
+})
+
 function searchName() {
+    store.commit('setnameFilter', search.value);
     store.commit('searchHeader', search.value);
 }
 </script>
