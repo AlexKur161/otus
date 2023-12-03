@@ -8,6 +8,7 @@ export const store = createStore({
         nameFilter: ''
       }
     },
+
     mutations: {
       setProductList (state, data) {
         state.ProductList = data;
@@ -28,17 +29,28 @@ export const store = createStore({
         }
       }
     },
+
     actions: {
       setProductListAction({state, commit}) {
         axios.get('https://fakestoreapi.com/products')
       .then(response => {
         commit('setProductList', response.data);
       })
-    .catch(error => {
-      console.log(error);
-    });
-        }
+      .catch(error => {
+        console.log(error);
+      });
       },
+      sendOrder({commit}, order) {
+        axios.post('https://jsonplaceholder.typicode.com/posts', JSON.stringify(order))
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      }
+    },
+
     getters: {
       getProductList(state) {
         return state.ProductList;

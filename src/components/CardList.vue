@@ -23,7 +23,7 @@
   import Loading from 'vue-loading-overlay';
   import { useStore } from 'vuex'
   import Card from './Card.vue'
-  import FiltersProduct from './FiltersProduct.vue'
+  import FiltersProduct from './filtersProduct.vue'
   import { onMounted, reactive, ref, computed } from 'vue'
 
   let productList = reactive([])

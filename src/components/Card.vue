@@ -10,7 +10,7 @@
             <p class="description-product">{{ productCard?.description }}</p>
           </div>
           <div class="add_basket_wrap">
-            <button class="btn_basket_wrap">Добавить в корзину</button>
+            <button @click="dialogState = true" class="btn_basket_wrap">Заказать</button>
           </div>
           <div class="category-rating">
               <div class="rating-wrap">
@@ -22,9 +22,14 @@
               </div>
           </div>
         </div>
+        <GDialog v-model="dialogState" max-width="450">
+          <OrderProduct />
+        </GDialog>
     </div>
 </template>
 <script setup>
+import { ref } from 'vue'
+import OrderProduct from './OrderProduct.vue'
 defineProps({
   productCard: {
     type: Object,
@@ -40,6 +45,8 @@ defineProps({
     }
   }
 })
+
+const dialogState = ref(false);
 </script>
 
 <style>
