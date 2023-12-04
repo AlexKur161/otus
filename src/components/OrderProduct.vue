@@ -7,39 +7,49 @@
           class="inp_order"
           name="nameUser"
           type="text"
+          :rules="validateNameUser"
           placeholder="Введите ваше имя"
         />
+        <ErrorMessage class="filter_error" name="nameUser" />
         <Field
           class="inp_order"
           name="patronymicUser"
           type="text"
+          :rules="validateNameUser"
           placeholder="Введите ваше отчество"
         />
+        <ErrorMessage class="filter_error" name="patronymicUser" />
         <Field
           class="inp_order"
           name="surnameUser"
           type="text"
+          :rules="validateNameUser"
           placeholder="Введите вашу фамилию"
         />
+        <ErrorMessage class="filter_error" name="surnameUser" />
         <Field
           class="inp_order"
           name="emailUser"
           type="email"
+          :rules="validateEmail"
           placeholder="Введите вашу email"
         />
+        <ErrorMessage class="filter_error" name="emailUser" />
         <Field
           class="inp_order policy_mr"
           name="mapUser"
+          v-model="mapUserInp"
           type="number"
+          :rules="validateMapUser"
           placeholder="Введите номер карты"
         />
+        <ErrorMessage class="filter_error" name="mapUser" />
         <Field v-slot="{ field }" name="policyUser" type="checkbox" :value="true">
         <label class="label_order">
           <input type="checkbox" name="terms" v-bind="field" :value="true" />
           Согласиться с обработкой данных
         </label>
       </Field>
-        <div class="filter_error price_error_one"><ErrorMessage name="nameUser" /></div>
         <div class="filter_error price_error"><ErrorMessage name="email" /></div>
         <button class="btn_order">Заказать</button>
       </div>
@@ -48,11 +58,41 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, watch } from 'vue'
 import { Form, Field, ErrorMessage } from 'vee-validate';
 import { useStore } from 'vuex';
 
 const store = useStore();
+const mapUserInp = ref('');
+
+function validateNameUser(value) {
+  if (!value) {
+    return 'Это обязательное поле';
+  }
+  return true;
+}
+function validateMapUser(value) {
+  if (!value) {
+    return 'Это обязательное поле';
+  }
+  if (typeof value !== 'number') {
+    return 'Номер карты является числом';
+  }
+  return true;
+}
+function validateEmail(value) {
+      // if the field is empty
+      if (!value) {
+        return 'Email обязательное поле';
+      }
+      // if the field is not a valid email
+      const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+      if (!regex.test(value)) {
+        return 'Некорректный email';
+      }
+      // All is good
+      return true;
+    }
 
 function send(){
   store.dispatch('sendOrder', {
@@ -60,6 +100,8 @@ function send(){
     id: 1
   })
 }
+
+
 
 </script>
 
@@ -110,6 +152,12 @@ function send(){
   font-size: 14px;
 }
 .policy_mr {
+  margin-bottom: 10px;
+}
+.filter_error {
+  color: red;
+  font-size: 14px;
+  margin-top: -10px;
   margin-bottom: 10px;
 }
 </style>

@@ -10,7 +10,7 @@
       :product-card="product"
       :key="product.id"
     />
-    <div v-else class="no_product">Продуктов соотвествующих вашему поиску не найдено</div>
+    <div v-if="productList.length === 0 && isLoading.value === false" class="no_product">Продуктов соотвествующих вашему поиску не найдено</div>
     <loading
       v-model:active="isLoading"
       :can-cancel="true"
@@ -23,20 +23,21 @@
   import Loading from 'vue-loading-overlay';
   import { useStore } from 'vuex'
   import Card from './Card.vue'
-  import FiltersProduct from './filtersProduct.vue'
+  import FiltersProduct from './FiltersProduct.vue'
   import { onMounted, reactive, ref, computed } from 'vue'
 
   let productList = reactive([])
-  const isLoading = ref(false)
+  const isLoading = ref(true)
   const fullPage = ref(true)
   const store = useStore()
 
   productList = computed(() => store.getters.getFilterList)
 
-  onMounted(async() => {
+  onMounted(() => {
     isLoading.value = true;
-    await store.dispatch('setProductListAction')
-    isLoading.value = false;
+    store.dispatch('setProductListAction').then(() => {
+      isLoading.value = false;
+    })
   })
 </script>
 <style>
