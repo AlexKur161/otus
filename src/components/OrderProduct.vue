@@ -7,6 +7,7 @@
           class="inp_order"
           name="nameUser"
           type="text"
+          v-model="nameValue"
           :rules="validateNameUser"
           placeholder="Введите ваше имя"
         />
@@ -15,6 +16,7 @@
           class="inp_order"
           name="patronymicUser"
           type="text"
+          v-model="patronymicValue"
           :rules="validateNameUser"
           placeholder="Введите ваше отчество"
         />
@@ -23,6 +25,7 @@
           class="inp_order"
           name="surnameUser"
           type="text"
+          v-model="surnameValue"
           :rules="validateNameUser"
           placeholder="Введите вашу фамилию"
         />
@@ -31,6 +34,7 @@
           class="inp_order"
           name="emailUser"
           type="email"
+          v-model="emailValue"
           :rules="validateEmail"
           placeholder="Введите вашу email"
         />
@@ -43,14 +47,20 @@
           :rules="validateMapUser"
           placeholder="Введите номер карты"
         />
-        <ErrorMessage class="filter_error" name="mapUser" />
-        <Field v-slot="{ field }" name="policyUser" type="checkbox" :value="true">
+        <ErrorMessage class="filter_error map_error" name="mapUser" />
+        <Field
+          :rules="validatePolicyUser"
+          v-slot="{ field }"
+          name="policyUser"
+          type="checkbox"
+          :value="true"
+        >
         <label class="label_order">
           <input type="checkbox" name="terms" v-bind="field" :value="true" />
           Согласиться с обработкой данных
         </label>
       </Field>
-        <div class="filter_error price_error"><ErrorMessage name="email" /></div>
+        <div class="filter_error policy-error"><ErrorMessage name="policyUser" /></div>
         <button class="btn_order">Заказать</button>
       </div>
     </Form>
@@ -63,6 +73,10 @@ import { Form, Field, ErrorMessage } from 'vee-validate';
 import { useStore } from 'vuex';
 
 const store = useStore();
+const nameValue = ref('')
+const patronymicValue = ref('')
+const surnameValue = ref('')
+const emailValue = ref('')
 const mapUserInp = ref('');
 
 function validateNameUser(value) {
@@ -93,16 +107,22 @@ function validateEmail(value) {
       // All is good
       return true;
     }
-
-function send(){
-  store.dispatch('sendOrder', {
-    name: 'fwfe',
-    id: 1
-  })
+function validatePolicyUser(value) {
+  if(!value) {
+    return 'Требуется ваше согласие на обработку данных'
+  }
+  return true
 }
-
-
-
+function send(){
+  let dataUser = {};
+  dataUser.nameValue = nameValue.value
+dataUser.patronymicValue = patronymicValue.value;
+dataUser.surnameValue = surnameValue.value;
+dataUser.emailValue = emailValue.value;
+dataUser.mapUserInp = mapUserInp.value;
+console.log(dataUser);
+  store.dispatch('sendOrder', dataUser);
+}
 </script>
 
 <style scoped>
@@ -159,5 +179,18 @@ function send(){
   font-size: 14px;
   margin-top: -10px;
   margin-bottom: 10px;
+}
+.inp_order::-webkit-outer-spin-button,
+.inp_order::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.map_error{
+  margin-top: 0;
+}
+.policy-error{
+  margin-top: 10px;
+  max-width: 200px;
+  text-align: center;
 }
 </style>

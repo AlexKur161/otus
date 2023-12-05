@@ -23,7 +23,7 @@ export const store = createStore({
         .filter(item => item.title.toLowerCase().includes(state.nameFilter.toLowerCase()));
         console.log(state.filterList.filter
           (item => item.price > 0 ))
-        if (data.maxPrice !== 0) {
+        if (data.maxPrice !== 0 && data.maxPrice !== undefined) {
           state.filterList = state.filterList.filter
           (item => (item.price > data.minPrice) && (item.price < data.maxPrice) )
         }

@@ -1,7 +1,7 @@
 <template>
   <div class="search_wrap">
     <div class="wraper_inp">
-        <input placeholder="Поиск товара" class="inp_search" @input="searchName" v-model="search" type="text">
+        <input placeholder="Поиск товара" class="inp_search" v-model="search" type="text">
         <button @click="searchName" class="btn_search">
             <img class="btn_img" src="/search.svg" alt="search">
         </button>
@@ -26,7 +26,7 @@ search.value = nameFilter.value;
 
 function searchName() {
     store.commit('setnameFilter', search.value);
-    store.commit('searchHeader', search.value);
+    store.commit('searchHeader', {});
 }
 </script>
 
