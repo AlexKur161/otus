@@ -6,8 +6,9 @@
                     <div><img class="logo" src="/alexLogo.svg" alt="logo"></div>
                     <SearchProducts />
                     <div class="basket_logo">
-                        <button @click="basketEvent" class="basket_btn">
-                            <div class="basket_counter"><p>10</p></div>
+                        <button @click="basketEvent" class="create-product-btn">Добавить продукт</button>
+                        <button class="basket_btn">
+                            <div class="basket_counter"><p>0</p></div>
                             <img src="/basket.svg" alt="basket" class="icon_basket">
                         </button>
                     </div>
@@ -67,5 +68,15 @@ function basketShow() {
 }
 .icon_basket{
     width: 36px;
+}
+.basket_logo {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.create-product-btn{
+    color: #fff;
+    background: none;
+    border: none;
 }
 </style>

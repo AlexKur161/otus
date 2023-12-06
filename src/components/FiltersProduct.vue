@@ -18,7 +18,7 @@
     <div class="filter_error price_error"><ErrorMessage name="maxPrice" /></div>
     <button class="btn_filter">Отфильтровать</button>
   </Form>
-		<button class="btn_filter">Сбросить фильтры</button>
+		<button @click="clearFilters" class="btn_filter">Сбросить фильтры</button>
   </div>
 </template>
 
@@ -42,6 +42,14 @@ const filtersData = computed(() => {
 const nameFilter = computed(() => store.getters.getNameFilter)
 
 function searchName() {
+  store.commit('setnameFilter', search.value);
+  store.commit('searchHeader', filtersData.value);
+}
+
+function clearFilters() {
+  search.value = '';
+  minPrice.value = 0;
+  maxPrice.value = 0;
   store.commit('setnameFilter', search.value);
   store.commit('searchHeader', filtersData.value);
 }

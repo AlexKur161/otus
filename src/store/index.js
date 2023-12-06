@@ -48,6 +48,15 @@ export const store = createStore({
         .catch(error => {
           console.log(error);
         });
+      },
+      setProductCreateAction({commit}, data) {
+        axios.post('https://jsonplaceholder.typicode.com/posts', JSON.stringify(data))
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
       }
     },
 
