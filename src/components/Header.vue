@@ -3,10 +3,10 @@
         <div class="header">
             <div class="container container_header">
                 <div class="header-wrap">
-                    <div><img class="logo" src="/alexLogo.svg" alt="logo"></div>
+                    <router-link to="/"><img class="logo" src="/alexLogo.svg" alt="logo"></router-link>
                     <SearchProducts />
                     <div class="basket_logo">
-                        <button @click="basketEvent" class="create-product-btn">Добавить продукт</button>
+                        <router-link to="/createProduct" class="create-product-btn">Добавить продукт</router-link >
                         <button class="basket_btn">
                             <div class="basket_counter"><p>0</p></div>
                             <img src="/basket.svg" alt="basket" class="icon_basket">
@@ -19,16 +19,7 @@
 </template>
 <script setup>
 import SearchProducts from './SearchProducts.vue'
-import { defineEmits } from 'vue'
 
-const emit = defineEmits(['basketEmit']);
-const basketEvent = function() {
-     emit('basketEmit', 'fgjf')
-}
-
-function basketShow() {
-
-}
 </script>
 <style scoped>
 .header {

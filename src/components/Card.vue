@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <router-link :to="'/product/' + productCard.id" class="card">
         <div class="img-wrap">
             <img class="img-card" :src="productCard?.image" alt="">
         </div>
@@ -10,7 +10,7 @@
             <p class="description-product">{{ productCard?.description }}</p>
           </div>
           <div class="add_basket_wrap">
-            <button @click="dialogState = true" class="btn_basket_wrap">Заказать</button>
+            <button @click.prevent="dialogState = true" class="btn_basket_wrap">Заказать</button>
           </div>
           <div class="category-rating">
               <div class="rating-wrap">
@@ -25,7 +25,7 @@
         <GDialog v-model="dialogState" max-width="450">
           <OrderProduct />
         </GDialog>
-    </div>
+    </router-link>
 </template>
 <script setup>
 import { ref } from 'vue'

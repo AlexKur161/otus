@@ -1,9 +1,9 @@
 <template>
     <div>
-      <button class="btn_prev" @click="goPrev">
+      <router-link to="/" class="btn_prev">
         <img class="prev-arrow" src="/left-arrow.svg" alt="arrow">
         <p>вернуться в каталог</p>
-      </button>
+      </router-link>
       <Form @submit="create">
         <div class="wrap_order">
           <h3 class="title_order">Заполните поля нового продукта</h3>
