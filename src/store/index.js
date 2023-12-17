@@ -1,11 +1,14 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { auth } from '../firebase/init.js'
 export const store = createStore({
     state () {
       return {
         ProductList: [],
         filterList: [],
-        nameFilter: ''
+        nameFilter: '',
+        user: ''
       }
     },
 
@@ -27,6 +30,9 @@ export const store = createStore({
           state.filterList = state.filterList.filter
           (item => (item.price > data.minPrice) && (item.price < data.maxPrice) )
         }
+      },
+      setEntranceSend(state, data) {
+        state.user = data;
       }
     },
 
@@ -57,6 +63,28 @@ export const store = createStore({
         .catch(error => {
           console.log(error);
         });
+      },
+      setEntranceSendAction({commit}, data) {
+        signInWithEmailAndPassword(auth, data.email, data.pass)
+        .then((userCredential) => {
+          console.log('зашел', userCredential);
+          commit('setEntranceSend', userCredential.user.displayName)
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+      },
+      setRegistrationSendAction({commit}, data) {
+        createUserWithEmailAndPassword(auth, data.email, data.pass)
+        .then((credential) => {
+          updateProfile(auth.currentUser, {
+            displayName: data.name
+          })
+          console.log('нука посмотрим', credential)
+        })
+        .catch((error) => {
+          console.log(error);
+        })
       }
     },
 
@@ -69,6 +97,9 @@ export const store = createStore({
       },
       getNameFilter(state) {
         return state.nameFilter;
+      },
+      getUser(state) {
+        return state.user;
       }
     }
 })

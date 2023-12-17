@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="default_wrap">
       <router-link to="/" class="btn_prev">
         <img class="prev-arrow" src="/left-arrow.svg" alt="arrow">
         <p>вернуться в каталог</p>

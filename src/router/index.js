@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from '/src/page/Home.vue'
 import Product from '/src/page/Product.vue'
 import createProduct from '/src/page/CreateProduct.vue'
+import Authorization from '/src/page/Authorization.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -20,6 +21,11 @@ const router = createRouter({
       path: '/product/:id',
       name: 'product',
       component: Product
+    },
+    {
+      path: '/authorization',
+      name: 'Authorization',
+      component: Authorization
     }
   ]
 })
