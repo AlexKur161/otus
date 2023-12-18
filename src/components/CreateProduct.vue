@@ -75,6 +75,9 @@
     if (typeof value !== 'number') {
       return 'Цена является числом';
     }
+    if ( value < 0) {
+      return 'цена не может быть меньше 0';
+    }
     return true;
   }
   function create(){
