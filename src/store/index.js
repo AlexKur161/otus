@@ -68,7 +68,7 @@ export const store = createStore({
         signInWithEmailAndPassword(auth, data.email, data.pass)
         .then((userCredential) => {
           console.log('зашел', userCredential);
-          commit('setEntranceSend', userCredential.user.displayName)
+          commit('setEntranceSend', userCredential.user.displayName);
         })
         .catch((error) => {
           console.log(error);
@@ -80,7 +80,7 @@ export const store = createStore({
           updateProfile(auth.currentUser, {
             displayName: data.name
           })
-          console.log('нука посмотрим', credential)
+          commit('setEntranceSend', data.name);
         })
         .catch((error) => {
           console.log(error);

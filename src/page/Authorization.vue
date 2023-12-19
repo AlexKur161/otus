@@ -127,9 +127,12 @@ function entranceSend() {
 		pass: entrancePassword.value
 	}
 	store.dispatch('setEntranceSendAction', entranceData).then(()=> {
+		entranceEmail.value = '';
+	  	entrancePassword.value = '';
 		router.push({
         name: 'home'
       })
+
 	})
 }
 function registrationSend() {
@@ -139,9 +142,13 @@ function registrationSend() {
 		pass: registrationPassword.value
 	}
 	store.dispatch('setRegistrationSendAction', registrationData).then(()=> {
+		registrationName.value = '';
+		registrationEmail.value = '';
+		registrationPassword.value = '';
 		router.push({
         name: 'home'
       })
+
 	})
 }
 
@@ -155,11 +162,15 @@ function registrationSend() {
     margin-bottom: 10px;
   }
 .authorization_wrap{
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	margin: auto;
+	position: absolute;
+	top: 50%; left: 50%;
+	-webkit-transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
+	transform: translate(-50%,-50%);
+  	display: flex;
+  	justify-content: center;
+  	align-items: center;
 }
 h1 {
 	font-weight: bold;

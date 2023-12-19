@@ -26,10 +26,10 @@
   import FiltersProduct from './FiltersProduct.vue'
   import { onMounted, reactive, ref, computed } from 'vue'
 
-  let productList = reactive([])
-  const isLoading = ref(true)
-  const fullPage = ref(true)
-  const store = useStore()
+  let productList = reactive([]);
+  const isLoading = ref(true);
+  const fullPage = ref(true);
+  const store = useStore();
 
   productList = computed(() => store.getters.getFilterList)
 
