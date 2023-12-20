@@ -8,10 +8,10 @@
 					<div class="wrap_header_user">
 						<div class="basket_logo">
 							<router-link to="/createProduct" class="create-product-btn">Добавить продукт</router-link >
-							<button class="basket_btn">
-									<div class="basket_counter"><p>0</p></div>
+							<router-link to="/basket" class="basket_btn">
+									<div class="basket_counter"><p>{{ quantity }}</p></div>
 									<img src="/basket.svg" alt="basket" class="icon_basket">
-							</button>
+                            </router-link>
 						</div>
 						<router-link v-if="user === ''" to="/authorization" class="login_wrap">
 							<div class="basket_btn">
@@ -35,6 +35,7 @@ import { useStore } from 'vuex';
 
 const store = useStore();
 
+const quantity = computed(() => store.getters.getQuantityBasket)
 const user = computed(()=> store.getters.getUser);
 
 </script>
@@ -68,6 +69,9 @@ const user = computed(()=> store.getters.getUser);
     position: absolute;
     top: 0;
     left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .basket_counter p {
     font-size: 12px;

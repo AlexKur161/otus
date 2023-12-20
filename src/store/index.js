@@ -8,7 +8,8 @@ export const store = createStore({
         ProductList: [],
         filterList: [],
         nameFilter: '',
-        user: ''
+        user: '',
+        basketList: []
       }
     },
 
@@ -33,6 +34,18 @@ export const store = createStore({
       },
       setEntranceSend(state, data) {
         state.user = data;
+      },
+      setBasket(state, product) {
+        let repeatProduct = state.basketList.find(item => item.id === product.id)
+        if(repeatProduct){
+          if(repeatProduct.quantity === undefined) {
+            repeatProduct.quantity = 2;
+          }else {
+            repeatProduct.quantity++
+          }
+        }else {
+          state.basketList.push(product);
+        }
       }
     },
 
@@ -100,6 +113,12 @@ export const store = createStore({
       },
       getUser(state) {
         return state.user;
+      },
+      getBasketList(state) {
+        return state.basketList;
+      },
+      getQuantityBasket(state) {
+        return state.basketList.length;
       }
     }
 })

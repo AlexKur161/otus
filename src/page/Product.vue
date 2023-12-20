@@ -23,7 +23,6 @@
             <p class="disc_title desc_product">Описание</p>
             <p>{{ product?.description}}</p>
           </div>
-            <p>fewfwef</p>
         </div>
         <div class="price-wrap">
           <div>
@@ -32,7 +31,7 @@
               <p class="price">{{ product?.price}}$</p>
             </div>
             <p class="grey-title">Оплата только онлайн</p>
-            <button class="btn_filter">Добавить в корзину</button>
+            <button @click="addProductBasket" class="btn_filter">Добавить в корзину</button>
             <router-link to="/" class="btn_filter link_catalog">Вернуться в каталог</router-link>
           </div>
           <div class="rating-wrap">
@@ -74,6 +73,10 @@ watch(ProductList, () => {
     isLoading.value = false;
   }
 })
+
+function addProductBasket() {
+  store.commit('setBasket', product.value);
+}
 onBeforeMount(async () => {
   await store.dispatch('setProductListAction')
 })

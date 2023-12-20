@@ -3,6 +3,7 @@ import Home from '/src/page/Home.vue'
 import Product from '/src/page/Product.vue'
 import createProduct from '/src/page/CreateProduct.vue'
 import Authorization from '/src/page/Authorization.vue'
+import Basket from '/src/page/Basket.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -24,8 +25,13 @@ const router = createRouter({
     },
     {
       path: '/authorization',
-      name: 'Authorization',
+      name: 'authorization',
       component: Authorization
+    },
+    {
+      path: '/basket',
+      name: 'basket',
+      component: Basket
     }
   ]
 })
