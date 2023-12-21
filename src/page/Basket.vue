@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Корзина</h2>
-    <div class="basket_wrap">
+    <div v-if="basketList.length > 0" class="basket_wrap">
       <div class="flex_product">
         <div v-for="product in basketList" class="product_wrap">
           <div class="wrap_img">
@@ -13,13 +13,18 @@
           </div>
           <div class="flex_height">
             <div class="wrap_add_product">
-              <button class="btn_add_product">
+              <button
+               :disabled="product.quantity < 2 || product.quantity === undefined"
+                @click="deleteQuantity(product)"
+                class="btn_add_product"
+              >
                 <svg class="quantity_disable" xmlns="http://www.w3.org/2000/svg" width="16px" height="24px" viewBox="0 0 24 24" fill="none">
                   <path class="quantity_disable" d="M6 12L18 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
-              <p class="quantity_number">1</p>
-              <button class="btn_add_product">
+              <p v-if="product.quantity === undefined" class="quantity_number">1</p>
+              <p v-else class="quantity_number">{{ product?.quantity }}</p>
+              <button @click="addQuantity(product)" class="btn_add_product">
                 <svg class="quantity_active" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="24px" id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="24px" xml:space="preserve">
                   <g><path d="M384,265H264v119h-17V265H128v-17h119V128h17v120h120V265z"/></g>
                 </svg>
@@ -31,46 +36,99 @@
           </div>
           <div class="delete_product">
             <button class="delete_btn"><img class="heart" src="/heart.svg" alt="heart"></button>
-            <button class="delete_btn"><img class="delete" src="/delete.svg" alt="delete"></button>
+            <button @click="deleteSelectedProduct(product)" class="delete_btn"><img class="delete" src="/delete.svg" alt="delete"></button>
           </div>
         </div>
       </div>
       <div class="wrap_price_full">
         <div class="price_total">
-          <p>Итого:</p>
-          <p>{{ totalPrice }}</p>
+          <p class="title_price_total">Итого:</p>
+          <p class="title_price_total">{{ totalPrice }} $</p>
         </div>
+        <button
+          @click="dialogState = true"
+          class="btn_filter">
+          Оформить заказ
+        </button>
+        <button
+          @click="clearBasket"
+          class="btn_filter">
+          Очистить корзину
+        </button>
+        <router-link to="/" class="btn_filter">Вернуться в каталог</router-link>
       </div>
     </div>
+    <div v-else class="no_data">
+      <p class="no_data_title">В корзине не продуктов</p>
+    </div>
+    <GDialog v-model="dialogState" max-width="450">
+      <OrderProduct @dialogShow="dialogClosed" />
+    </GDialog>
   </div>
 </template>
 
 <script setup>
 import { ref, computed, watch } from 'vue';
 import { useStore } from 'vuex';
+import OrderProduct from '../components/OrderProduct.vue'
 
 const store = useStore();
 
-const totalPrice = ref(0);
+const dialogState = ref(false);
 const basketList = computed(() => store.getters.getBasketList);
 
-watch(basketList, () => {
-  console.log('сработал');
-  console.log(basketList);
-  totalPrice.value = basketList.value.reduce((total, product) => {
-    console.log('total', total)
-  return total + product.price
-  }, 0)
-}, { immediate: true })
+const totalPrice = computed(()=> {
+  const total = basketList.value.reduce((total, product) => {
+     console.log('total', total);
+     if(product.quantity){
+       return total + (product.price * product.quantity);
+     }else {
+       return total + product.price;
+     }
+   }, 0).toFixed(2);
+   return total
+})
+
+function dialogClosed(condition) {
+  dialogState.value = condition;
+}
+
+function clearBasket() {
+  store.commit('clearBasket');
+}
+
+function addQuantity(product) {
+  if(product.quantity) {
+    product.quantity++
+  }else{
+    product.quantity = 2;
+  }
+}
+
+function deleteQuantity(product) {
+  product.quantity--;
+}
+
+function deleteSelectedProduct(product) {
+  console.log('продукт', product)
+  store.commit('deleteProduct', product);
+}
+
 </script>
 
 <style scope>
+.no_data_title{
+  font-size: 24px;
+  margin-top: 20px;
+}
 .basket_wrap{
   margin-top: 40px;
   border-radius: 20px;
-    box-shadow: 0 8px 24px 0 rgba(8,9,10,.08);
-    margin-bottom: 32px;
-    padding: 24px;
+  box-shadow: 0 8px 24px 0 rgba(8,9,10,.08);
+  margin-bottom: 32px;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
 }
 .flex_product{
   display: flex;
@@ -148,8 +206,41 @@ watch(basketList, () => {
   width: 16px;
   height: 16px;
 }
+.price_total{
+  display: flex;
+  justify-content: space-between;
+}
 .delete_btn{
   background: none;
   border: none;
+}
+.title_price_total{
+  font-size: 34px;
+  font-weight: 700;
+}
+.btn_filter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	border-radius: 24px;
+  outline: none;
+  border: 1px solid #8000FF;
+  height: 40px;
+  width: 300px;
+	background: none;
+	font-size: 16px;
+	transition: 0.4s;
+	font-weight: 500;
+}
+.btn_filter:hover {
+	background: #8000FF;
+	color: #fff;
+	transition: 0.4s;
+}
+.wrap_price_full{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 300px;
 }
 </style>

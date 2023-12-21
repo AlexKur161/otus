@@ -78,6 +78,7 @@ const patronymicValue = ref('')
 const surnameValue = ref('')
 const emailValue = ref('')
 const mapUserInp = ref('');
+const emit = defineEmits(['dialogShow'])
 
 function validateNameUser(value) {
   if (!value) {
@@ -116,12 +117,18 @@ function validatePolicyUser(value) {
 function send(){
   let dataUser = {};
   dataUser.nameValue = nameValue.value
-dataUser.patronymicValue = patronymicValue.value;
-dataUser.surnameValue = surnameValue.value;
-dataUser.emailValue = emailValue.value;
-dataUser.mapUserInp = mapUserInp.value;
-console.log(dataUser);
+  dataUser.patronymicValue = patronymicValue.value;
+  dataUser.surnameValue = surnameValue.value;
+  dataUser.emailValue = emailValue.value;
+  dataUser.mapUserInp = mapUserInp.value;
+  console.log(dataUser);
   store.dispatch('sendOrder', dataUser);
+  emit('dialogShow', false);
+  nameValue.value = '';
+  patronymicValue.value = '';
+  surnameValue.value = '';
+  emailValue.value = '';
+  mapUserInp.value = '';
 }
 </script>
 

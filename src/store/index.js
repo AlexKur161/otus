@@ -46,6 +46,12 @@ export const store = createStore({
         }else {
           state.basketList.push(product);
         }
+      },
+      clearBasket(state){
+        state.basketList = [];
+      },
+      deleteProduct(state, product) {
+        state.basketList = state.basketList.filter(item => item.id !== product.id);
       }
     },
 
