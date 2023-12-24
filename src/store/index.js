@@ -8,7 +8,11 @@ export const store = createStore({
         ProductList: [],
         filterList: [],
         nameFilter: '',
-        user: '',
+        user: {
+          userName: null,
+          accesToken: null,
+          refreshToken: null
+        },
         basketList: []
       }
     },
@@ -32,8 +36,8 @@ export const store = createStore({
           (item => (item.price > data.minPrice) && (item.price < data.maxPrice) )
         }
       },
-      setEntranceSend(state, data) {
-        state.user = data;
+      setEntranceSend(state, user) {
+        state.user = user;
       },
       setBasket(state, product) {
         let repeatProduct = state.basketList.find(item => item.id === product.id)
@@ -87,7 +91,13 @@ export const store = createStore({
         signInWithEmailAndPassword(auth, data.email, data.pass)
         .then((userCredential) => {
           console.log('зашел', userCredential);
-          commit('setEntranceSend', userCredential.user.displayName);
+          const user = {
+            userName: userCredential._tokenResponse.displayName,
+            accesToken: userCredential._tokenResponse.idToken,
+            refreshToken: userCredential._tokenResponse.refreshToken
+          }
+          commit('setEntranceSend', user);
+          localStorage.setItem('user', JSON.stringify(user));
         })
         .catch((error) => {
           console.log(error);
@@ -98,8 +108,16 @@ export const store = createStore({
         .then((credential) => {
           updateProfile(auth.currentUser, {
             displayName: data.name
-          })
-          commit('setEntranceSend', data.name);
+          }).then(()=> {
+            console.log('credential',credential)
+            const user = {
+              userName: credential.user.displayName,
+              accesToken: credential._tokenResponse.idToken,
+              refreshToken: credential._tokenResponse.refreshToken
+            }
+          commit('setEntranceSend', user);
+          localStorage.setItem('user', JSON.stringify(user));
+          });
         })
         .catch((error) => {
           console.log(error);

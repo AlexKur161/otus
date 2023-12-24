@@ -16,7 +16,17 @@ const router = createRouter({
     {
       path: '/createProduct',
       name: 'createProduct',
-      component: createProduct
+      component: createProduct,
+      beforeEnter(to, from, next) {
+        const user = JSON.parse(localStorage.getItem('user'));
+        console.log(!user)
+        if(!user){
+          console.log('zachel')
+          return next({name: 'authorization'});
+        }else{
+          return next();
+        }
+      }
     },
     {
       path: '/product/:id',

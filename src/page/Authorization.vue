@@ -83,8 +83,6 @@ import { ref, reactive } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { Form, Field, ErrorMessage } from 'vee-validate';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth'
-import { auth } from '../firebase/init.js'
 
 const store = useStore();
 const router = useRouter()
