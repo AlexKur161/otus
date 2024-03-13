@@ -123,6 +123,7 @@ onBeforeMount(async () => {
 .wrap_title_price{
   display: flex;
   gap: 20px;
+  align-items: center;
 }
 .title_price{
   font-size: 30px;
